@@ -1,0 +1,20 @@
+schema_version = 0
+
+[pkg]
+name = "msys2-runtime"
+supported_platforms = ["windows-x86_64"]
+version = "0.1-0"
+build_depends = []
+depends = []
+
+[input]
+source_version = "0.1"
+sha256 = "d9f38b3c51adb35e0da5649e2689aca2dfc6d1a62349e368a7bb187ae457bb7d"
+tarball_compression = "gz"
+image_type = "bootstrap_msys"
+
+[rules]
+default = [
+    "mkdir ${cimple_output_dir}/bin",
+    "cp ${cimple_image_dir}/usr/bin/msys-2.0.dll ${cimple_output_dir}/bin/"
+]
