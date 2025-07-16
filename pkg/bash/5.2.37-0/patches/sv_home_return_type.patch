@@ -1,0 +1,14 @@
+Makes sv_home signature compile on Windows.
+
+Otherwise the build fails with:
+variables.c:6101:1: error: return type defaults to 'int' [-Wimplicit-int]
+--- a/variables.c
++++ b/variables.c
+@@ -6098,6 +6098,7 @@ sv_winsize (name)
+ /* Update the value of HOME in the export environment so tilde expansion will
+    work on cygwin. */
+ #if defined (__CYGWIN__)
++void
+ sv_home (name)
+      char *name;
+ {
