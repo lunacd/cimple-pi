@@ -5,7 +5,7 @@ name = "cmake"
 supported_platforms = ["windows-x86_64"]
 version = "4.0.3-0"
 build_depends = []
-depends = []
+depends = ["msys2-runtime"]
 
 [input]
 source_version = "4.0.3"
