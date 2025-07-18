@@ -20,6 +20,6 @@ patches = [
 [rules]
 default = [
     "bash ./configure --prefix ${cimple_output_dir}",
-    "make",
+    "make -j${cimple_parallelism}",
     "make install-exec"
 ]

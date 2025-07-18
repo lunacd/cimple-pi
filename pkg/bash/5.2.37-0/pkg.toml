@@ -21,6 +21,6 @@ patches = [
 [rules]
 default = [
     { env = { "CFLAGS" = "-std=gnu17" }, rule = "bash ./configure --prefix ${cimple_output_dir}"},
-    "make",
+    "make -j${cimple_parallelism}",
     "make install"
 ]
