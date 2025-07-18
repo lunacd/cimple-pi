@@ -1,0 +1,14 @@
+Provide _BSD_SOURCE to Cygwin builds
+
+This is needed for functions like arc4random.
+--- a/Utilities/cmcurl/CMakeLists.txt
++++ b/Utilities/cmcurl/CMakeLists.txt
+@@ -162,7 +162,7 @@ endif()
+ if(CMAKE_SYSTEM_NAME MATCHES "^(AIX|OS400)$")
+   add_definitions(-D_ALL_SOURCE)
+ endif()
+-if(CMAKE_SYSTEM_NAME MATCHES "^(Linux)$")
++if(CMAKE_SYSTEM_NAME MATCHES "^(Linux|MSYS)$")
+   add_definitions(-D_DEFAULT_SOURCE -D_BSD_SOURCE)
+ endif()
+ if(CMAKE_SYSTEM_NAME MATCHES "^(SunOS)$")

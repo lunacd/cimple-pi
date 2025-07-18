@@ -1,0 +1,25 @@
+schema_version = 0
+
+[pkg]
+name = "cmake"
+supported_platforms = ["windows-x86_64"]
+version = "4.0.3-0"
+build_depends = []
+depends = []
+
+[input]
+source_version = "4.0.3"
+sha256 = "8d3537b7b7732660ea247398f166be892fe6131d63cc291944b45b91279f3ffb"
+tarball_root_dir = "cmake-4.0.3"
+tarball_compression = "gz"
+image_type = "bootstrap_msys"
+patches = [
+    "bsd-source.patch"
+]
+
+[rules]
+default = [
+    { rule = ["bash", "./bootstrap", "--generator=Unix Makefiles", "--parallel=${cimple_parallelism}", "--", "-DCMAKE_USE_OPENSSL=OFF"] },
+    "make -j${cimple_parallelism}",
+    "make install"
+]
