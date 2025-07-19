@@ -25,6 +25,7 @@ default = [
         "--",
         "-DCMAKE_USE_OPENSSL=OFF",
         "-DCMAKE_INSTALL_PREFIX=${cimple_output_dir_cygwin}",
+        "-DCMAKE_BUILD_TYPE=Release",
     ] },
     "make -j${cimple_parallelism}",
     "make install",
