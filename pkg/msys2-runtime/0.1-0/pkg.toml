@@ -16,5 +16,8 @@ image_type = "bootstrap_msys"
 [rules]
 default = [
     "mkdir ${cimple_output_dir}/bin",
-    "cp ${cimple_image_dir}/usr/bin/msys-2.0.dll ${cimple_output_dir}/bin/"
+    "cp ${cimple_image_dir}/usr/bin/msys-2.0.dll ${cimple_output_dir}/bin/",
+    "cp ${cimple_image_dir}/usr/bin/msys-gcc_s-seh-1.dll ${cimple_output_dir}/bin/",
+    "cp ${cimple_image_dir}/usr/bin/msys-stdc++-6.dll ${cimple_output_dir}/bin/",
+    "cp ${cimple_image_dir}/usr/bin/msys-ncursesw6.dll ${cimple_output_dir}/bin/",
 ]
