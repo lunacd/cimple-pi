@@ -1,0 +1,35 @@
+schema_version = 0
+
+[pkg]
+name = "perl"
+supported_platforms = ["windows-x86_64"]
+version = "5.38.4-0"
+build_depends = []
+depends = []
+
+[input]
+source_version = "5.38.4"
+sha256 = "e63ee4f816ccdba64cecf9036a80da645b79519bf54e4c89832497a16088556e"
+tarball_root_dir = "perl5-5.38.4"
+tarball_compression = "gz"
+image_type = "bootstrap_msys"
+
+[rules]
+default = [
+    { rule = [
+        "bash",
+        "./Configure",
+        "-de",
+        "-Dprefix=${cimple_output_dir}",
+        "-Dman1dir=none",
+        "-Dman3dir=none",
+        "-Dfirstmakefile=GNUmakefile",
+        "-Dccflags=-D_GNU_SOURCE -Wno-error=int-conversion",
+        "-Dissymlink=test -h", # Force test -h because MSYS2 defaults to winsymlinks:deepcopy symlink mode
+        "-Dcc=gcc",
+        "-Dld=g++",
+        "-Dosname=cygwin", # This picks up the correct hints file for cygwin
+    ] },
+    "make -j${cimple_parallelism}",
+    "make install",
+]
