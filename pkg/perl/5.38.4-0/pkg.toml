@@ -25,10 +25,20 @@ default = [
         "-Dman3dir=none",
         "-Dfirstmakefile=GNUmakefile",
         "-Dccflags=-D_GNU_SOURCE -Wno-error=int-conversion",
-        "-Dissymlink=test -h", # Force test -h because MSYS2 defaults to winsymlinks:deepcopy symlink mode
+        "-Dissymlink=test -h",  # Force test -h because MSYS2 defaults to winsymlinks:deepcopy symlink mode
         "-Dcc=gcc",
         "-Dld=g++",
-        "-Dosname=cygwin", # This picks up the correct hints file for cygwin
+        "-Dosname=cygwin",  # This picks up the correct hints file for cygwin
+        "-Dvendorprefix=/",
+        "-Dprivlib=/share/perl5/core_perl",
+        "-Darchlib=/lib/perl5/core_perl",
+        "-Dsitelib=/share/perl5/site_perl",
+        "-Dsitearch=/lib/perl5/site_perl",
+        "-Dvendorlib=/share/perl5/vendor_perl",
+        "-Dvendorarch=/lib/perl5/vendor_perl",
+        "-Dscriptdir=/bin/core_perl",
+        "-Dsitescript=/bin/site_perl",
+        "-Dvendorscript=/bin/vendor_perl",
     ] },
     "make -j${cimple_parallelism}",
     "make install",
