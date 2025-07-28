@@ -1,0 +1,22 @@
+schema_version = 0
+
+[pkg]
+name = "help2man"
+supported_platforms = ["windows-x86_64"]
+version = "1.49.3-0"
+build_depends = ["perl"]
+depends = ["msys2-runtime"]
+
+[input]
+source_version = "1.49.3"
+sha256 = "4d7e4fdef2eca6afe07a2682151cea78781e0a4e8f9622142d9f70c083a2fd4f"
+tarball_root_dir = "help2man-1.49.3"
+tarball_compression = "xz"
+image_type = "bootstrap_msys"
+
+[rules]
+default = [
+    "bash ./configure --prefix ${cimple_output_dir}",
+    "make -j${cimple_parallelism}",
+    "make install",
+]
