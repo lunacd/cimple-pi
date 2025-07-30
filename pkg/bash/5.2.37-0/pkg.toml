@@ -20,7 +20,8 @@ patches = [
 
 [rules]
 default = [
-    { env = { "CFLAGS" = "-std=gnu17" }, rule = "bash ./configure --prefix ${cimple_output_dir}"},
+    { env = { "CFLAGS" = "-std=gnu17" }, rule = "bash ./configure --prefix ${cimple_output_dir}/usr"},
     "make -j${cimple_parallelism}",
-    "make install"
+    "make install",
+    "ln -s ${cimple_image_dir}/usr/bin/bash.exe ${cimple_output_dir}/usr/bin/sh.exe",
 ]
