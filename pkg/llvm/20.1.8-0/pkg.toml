@@ -1,0 +1,31 @@
+schema_version = 0
+
+[pkg]
+name = "llvm"
+supported_platforms = ["windows-x86_64"]
+version = "20.1.8-0"
+build_depends = ["cmake", "bash"]
+depends = ["msys2-runtime"]
+
+[input]
+source_version = "20.1.8"
+sha256 = "a6cbad9b2243b17e87795817cfff2107d113543a12486586f8a055a2bb044963"
+tarball_root_dir = "llvm-project-llvmorg-20.1.8"
+tarball_compression = "gz"
+image_type = "bootstrap_msys"
+
+[rules]
+default = [
+    { rule = [
+        "cmake",
+        "-S",
+        "clang",
+        "-B",
+        "build",
+        "-GUnix Makefiles",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=${cimple_output_dir_cygwin}",
+    ], env = { CC = "gcc", CXX = "g++" } },
+    "cmake --build ./build -j${cimple_parallelism}",
+    "cmake --install ./build",
+]
