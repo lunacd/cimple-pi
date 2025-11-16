@@ -1,17 +1,17 @@
 schema_version = 0
 pkg_type = "custom"
 
-name = "cmake"
-version = "4.0.3-0"
+name = "ninja"
+version = "1.13.1-0"
 
 [pkg]
 supported_platforms = ["windows-x86_64"]
-build_depends = ["ninja"]
+build_depends = ["googletest"]
 
 [input]
-sha256 = "8d3537b7b7732660ea247398f166be892fe6131d63cc291944b45b91279f3ffb"
-source_version = "4.0.3"
-tarball_root_dir = "cmake-4.0.3"
+sha256 = "f0055ad0369bf2e372955ba55128d000cfcc21777057806015b45e4accbebf23"
+source_version = "1.13.1"
+tarball_root_dir = "ninja-1.13.1"
 
 [rules]
 default = [
@@ -20,5 +20,5 @@ default = [
     { env = { DESTDIR = "${cimple_output_dir}" }, rule = "cmake --install build --prefix /" }
 ]
 
-[binaries.cmake]
-depends = ["cygwin"]
+[binaries.ninja]
+depends = []

@@ -1,0 +1,24 @@
+schema_version = 0
+pkg_type = "custom"
+
+name = "googletest"
+version = "20251109_085af2c-0"
+
+[pkg]
+supported_platforms = ["windows-x86_64"]
+build_depends = []
+
+[input]
+sha256 = "3e1943a0ea122b72be89ce5d03713be97871bf167443efb829e5dbf0efe21920"
+source_version = "20251109_085af2c"
+tarball_root_dir = "google-googletest-085af2c"
+
+[rules]
+default = [
+    { env = { C_FLAGS = "-m64", CXX_FLAGS = "-m64" }, rule = "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo" },
+    "cmake --build build -j${cimple_parallelism}",
+    { env = { DESTDIR = "${cimple_output_dir}" }, rule = "cmake --install build --prefix /" }
+]
+
+[binaries.googletest]
+depends = []
