@@ -17,8 +17,8 @@ tarball_root_dir = "cmake-4.0.3"
 default = [
     { env = { C_FLAGS = "-m64", CXX_FLAGS = "-m64" }, rule = "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release" },
     "cmake --build build -j${cimple_parallelism}",
-    { env = { DESTDIR = "${cimple_output_dir}" }, rule = "cmake --install build --prefix /" }
+    { env = { DESTDIR = "${cimple_output_dir}" }, rule = "cmake --install build --prefix /" },
 ]
 
 [binaries.cmake]
-depends = ["cygwin"]
+depends = []
