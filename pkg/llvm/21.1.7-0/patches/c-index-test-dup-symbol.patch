@@ -1,0 +1,31 @@
+Backport of https://github.com/llvm/llvm-project/pull/171054 as of 12/26/2025.
+
+diff --git a/clang/cmake/modules/AddClang.cmake b/clang/cmake/modules/AddClang.cmake
+index 4059fc3e986c7..9dcc77d5a5184 100644
+--- a/clang/cmake/modules/AddClang.cmake
++++ b/clang/cmake/modules/AddClang.cmake
+@@ -115,9 +115,6 @@ macro(add_clang_library name)
+     if(TARGET "obj.${name}")
+       target_compile_definitions("obj.${name}" PUBLIC CLANG_BUILD_STATIC)
+     endif()
+-  elseif(TARGET "obj.${name}" AND NOT ARG_SHARED AND NOT ARG_STATIC)
+-    # Clang component libraries linked to clang-cpp are declared without SHARED or STATIC
+-    target_compile_definitions("obj.${name}" PUBLIC CLANG_EXPORTS)
+   endif()
+ 
+   set(libs ${name})
+diff --git a/clang/include/clang/Support/Compiler.h b/clang/include/clang/Support/Compiler.h
+index e1ae3eda4ccc2..1aab64e11521c 100644
+--- a/clang/include/clang/Support/Compiler.h
++++ b/clang/include/clang/Support/Compiler.h
+@@ -45,8 +45,8 @@
+ #define CLANG_TEMPLATE_ABI
+ #define CLANG_EXPORT_TEMPLATE __declspec(dllexport)
+ #else
+-#define CLANG_ABI __declspec(dllimport)
+-#define CLANG_TEMPLATE_ABI __declspec(dllimport)
++#define CLANG_ABI
++#define CLANG_TEMPLATE_ABI
+ #define CLANG_EXPORT_TEMPLATE
+ #endif
+ #elif defined(__ELF__) || defined(__MINGW32__) || defined(_AIX) ||             \

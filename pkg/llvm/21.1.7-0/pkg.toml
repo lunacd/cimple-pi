@@ -1,0 +1,70 @@
+schema_version = 0
+pkg_type = "custom"
+
+name = "llvm"
+version = "21.1.7-0"
+
+[pkg]
+supported_platforms = ["windows-x86_64"]
+build_depends = ["cmake", "ninja"]
+
+[input]
+source_version = "21.1.7"
+sha256 = "e5b65fd79c95c343bb584127114cb2d252306c1ada1e057899b6aacdd445899e"
+tarball_root_dir = "llvm-project-21.1.7.src"
+tarball_compression = "xz"
+patches = ["c-index-test-dup-symbol.patch"]
+
+[rules]
+default = [
+    { env = { C = "clang", CXX = "clang++", C_FLAGS = "-m64", CXX_FLAGS = "-m64" }, rule = [
+        "cmake",
+        "-S",
+        "runtimes",
+        "-B",
+        "runtime-build",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DLLVM_ENABLE_RUNTIMES=libcxx",
+        "-DLLVM_TARGETS_TO_BUILD=X86",
+        "-DLIBCXX_ENABLE_STATIC=ON",
+        "-DLIBCXX_ENABLE_SHARED=OFF",
+        "-DLIBCXX_INSTALL_LIBRARY=ON",
+        "-DLIBCXX_INSTALL_HEADERS=ON",
+        "-DLIBCXX_INSTALL_MODULES=ON",
+        "-DLIBCXX_CXX_ABI=vcruntime",
+    ] },
+    "cmake --build runtime-build -j${cimple_parallelism}",
+    { env = { DESTDIR = "${cimple_output_dir}/libcxx-dev" }, rule = "cmake --install runtime-build --prefix / --component cxx" },
+    { env = { DESTDIR = "${cimple_output_dir}/libcxx-dev" }, rule = "cmake --install runtime-build --prefix / --component cxx-headers" },
+    { env = { DESTDIR = "${cimple_output_dir}/libcxx-dev" }, rule = "cmake --install runtime-build --prefix / --component cxx-modules" },
+    { env = { C = "clang", CXX = "clang++", C_FLAGS = "-m64", CXX_FLAGS = "-m64" }, rule = [
+        "cmake",
+        "-S",
+        "llvm",
+        "-B",
+        "toolchain-build",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DLLVM_ENABLE_PROJECTS=clang;lld",
+        "-DLLVM_TARGETS_TO_BUILD=X86",
+        "-DLLVM_TOOL_LLVM_RC_BUILD=ON",
+    ] },
+    "cmake --build toolchain-build -j${cimple_parallelism}",
+    { env = { DESTDIR = "${cimple_output_dir}/clang" }, rule = "cmake --install toolchain-build --prefix / --component=clang" },
+    { env = { DESTDIR = "${cimple_output_dir}/lld" }, rule = "cmake --install toolchain-build --prefix / --component=lld" },
+]
+
+[binaries.clang]
+depends = []
+output_dir = "clang"
+
+[binaries.libcxx-dev]
+depends = []
+output_dir = "libcxx-dev"
+
+[binaries.lld]
+depends = []
+output_dir = "lld"
